@@ -1,6 +1,8 @@
 # Ruby-JMeter plus - now with bananas to
 
-This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project
+This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project.
+
+The main aim of the project - add frequently used features of JMeter (like entity custom names and comments) that not present in [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project. 
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 

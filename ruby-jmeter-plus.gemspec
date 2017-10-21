@@ -9,7 +9,7 @@ require 'ruby-jmeter/version'
 Gem::Specification.new do |gem|
   gem.name          = 'ruby-jmeter-plus'
   gem.version       = RubyJmeter::VERSION
-  gem.authors       = ['Tim Koopmans']
+  gem.authors       = ['Tim Koopmans', 'Viktor Silakov']
   gem.email         = ['support@flood.io']
   gem.description   = %q{Ruby based DSL for writing JMeter test plans}
   gem.summary       = %q{Ruby based DSL for writing JMeter test plans}
