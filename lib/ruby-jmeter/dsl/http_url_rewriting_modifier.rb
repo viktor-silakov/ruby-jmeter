@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpUrlRewritingModifier' : (params[:name] || 'HttpUrlRewritingModifier')
+      testname = params.kind_of?(Array) ? 'HTTP Url Rewriting Modifier' : (params[:name] || 'HTTP Url Rewriting Modifier')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <URLRewritingModifier guiclass="URLRewritingModifierGui" testclass="URLRewritingModifier" testname="#{testname}" enabled="true">
   <stringProp name="argument_name"/>

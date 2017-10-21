@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpAuthorizationManager' : (params[:name] || 'HttpAuthorizationManager')
+      testname = params.kind_of?(Array) ? 'HTTP Authorization Manager' : (params[:name] || 'HTTP Authorization Manager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="#{testname}" enabled="true">
   <collectionProp name="AuthManager.auth_list">

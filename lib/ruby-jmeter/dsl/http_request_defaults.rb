@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpRequestDefaults' : (params[:name] || 'HttpRequestDefaults')
+      testname = params.kind_of?(Array) ? 'HTTP Request Defaults' : (params[:name] || 'HTTP Request Defaults')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="#{testname}" enabled="true">
   <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">

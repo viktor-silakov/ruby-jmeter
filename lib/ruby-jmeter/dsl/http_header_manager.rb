@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpHeaderManager' : (params[:name] || 'HttpHeaderManager')
+      testname = params.kind_of?(Array) ? 'HTTP Header Manager' : (params[:name] || 'HTTP Header Manager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="#{testname}" enabled="true">
   <collectionProp name="HeaderManager.headers">

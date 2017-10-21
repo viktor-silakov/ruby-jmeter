@@ -9,9 +9,13 @@ This gem lets you write test plans for JMeter in your favourite text editor, and
 
 ## Installation
 
+Add the line to Gemfile:
+
+    $ gem "ruby-jmeter-plus", :git => "git@github.com:viktor-silakov/ruby-jmeter.git"
+
 Install it yourself as:
 
-    $ gem install ruby-jmeter
+    $ gem install ruby-jmeter-plus
 
 ## Basic Usage
 
@@ -19,8 +23,9 @@ Install it yourself as:
 
 To use the DSL, first let's require the gem:
 
+
 ```ruby
-!require 'ruby-jmeter'
+!require 'ruby-jmeter-plus'
 ```
 
 ### Basic Example

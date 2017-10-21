@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpCookieManager' : (params[:name] || 'HttpCookieManager')
+      testname = params.kind_of?(Array) ? 'HTTP Cookie Manager' : (params[:name] || 'HTTP Cookie Manager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="#{testname}" enabled="true">
   <collectionProp name="CookieManager.cookies"/>

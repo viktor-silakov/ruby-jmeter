@@ -11,7 +11,7 @@ module RubyJmeter
     include Helper
 
     def initialize(params={})
-      testname = params.kind_of?(Array) ? 'HttpCacheManager' : (params[:name] || 'HttpCacheManager')
+      testname = params.kind_of?(Array) ? 'HTTP Cache Manager' : (params[:name] || 'HTTP Cache Manager')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="#{testname}" enabled="true">
   <boolProp name="clearEachIteration">false</boolProp>
