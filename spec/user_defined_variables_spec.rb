@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# TODO: add case for variables has 'name' and 'comment'
+
 describe 'user_defined_variables' do
   let(:doc) do
     test do

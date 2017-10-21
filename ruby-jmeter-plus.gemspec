@@ -1,4 +1,7 @@
 # -*- encoding: utf-8 -*-
+# gem build ruby-jmeter-plus.gemspec
+# gem install --local ruby-jmeter-plus-3.1.08.gem
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby-jmeter/version'

@@ -1,6 +1,7 @@
 module RubyJmeter
   class DSL
     def user_defined_variables(params={}, &block)
+
       node = RubyJmeter::UserDefinedVariables.new(params)
       attach_node(node, &block)
     end
@@ -12,6 +13,7 @@ module RubyJmeter
 
     def initialize(params={})
       testname = params.kind_of?(Array) ? 'UserDefinedVariables' : (params[:name] || 'UserDefinedVariables')
+      comment = params.kind_of?(Array) ? '' : (params[:comment] || '')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="#{testname}" enabled="true">
   <collectionProp name="Arguments.arguments">
@@ -22,12 +24,12 @@ module RubyJmeter
       <stringProp name="Argument.desc"> </stringProp>
     </elementProp>
   </collectionProp>
-  <stringProp name="TestPlan.comments"> </stringProp>
+  <stringProp name="TestPlan.comments">#{comment} </stringProp>
 </Arguments>)
       EOS
+      params = params.is_a?(Hash) ? params[:variables] : params
       update params
       update_at_xpath params if params.is_a?(Hash) && params[:update_at_xpath]
     end
   end
-
 end
