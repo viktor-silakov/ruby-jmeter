@@ -1,6 +1,6 @@
-# Ruby-JMeter [![Build Status](https://travis-ci.org/flood-io/ruby-jmeter.png)](https://travis-ci.org/flood-io/ruby-jmeter) [![Code Climate](https://codeclimate.com/github/flood-io/ruby-jmeter.png)](https://codeclimate.com/github/flood-io/ruby-jmeter) [![Gem Version](https://badge.fury.io/rb/ruby-jmeter.svg)](http://badge.fury.io/rb/ruby-jmeter)
+# Ruby-JMeter fork
 
-> **Ruby-JMeter** is built and maintained by [Flood IO](https://flood.io?utm_source=github), an easy to use load testing platform for any scale of testing.
+This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter project>) project
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
