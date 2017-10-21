@@ -1,4 +1,4 @@
-# Ruby-JMeter fork
+# Ruby-JMeter plus - now with bananas to
 
 This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project
 
@@ -20,7 +20,7 @@ Install it yourself as:
 To use the DSL, first let's require the gem:
 
 ```ruby
-require 'ruby-jmeter'
+!require 'ruby-jmeter'
 ```
 
 ### Basic Example
