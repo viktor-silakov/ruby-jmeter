@@ -1,12 +1,11 @@
 # Ruby-JMeter fork
 
-This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter project>) project
+This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
 This gem lets you write test plans for JMeter in your favourite text editor, and optionally run them on [flood.io](http://flood.io).
 
-![](https://flood.io/images/logo-flood-medium.png)
 
 ## Installation
 
