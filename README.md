@@ -1,4 +1,4 @@
-# Ruby-JMeter plus - now with bananas to
+# Ruby-JMeter-Plus - now with bananas to
 
 This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project.
 
@@ -27,7 +27,7 @@ To use the DSL, first let's require the gem:
 
 
 ```ruby
-!require 'ruby-jmeter-plus'
+require 'ruby-jmeter-plus'
 ```
 
 ### Basic Example
@@ -154,7 +154,7 @@ Blocks let you nest methods within methods, so you can scope the execution of me
 test do
   threads count: 100 do
     visit name: 'Home', url: 'http://altentee.com' do
-      extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token'
+      extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token', scope: 'Main sample only'
     end
   end
 end
