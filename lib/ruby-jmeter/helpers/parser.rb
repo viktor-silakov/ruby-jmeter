@@ -5,16 +5,19 @@ module RubyJmeter
       if params[:raw_path]
         params[:path] = params[:url]
         parse_url(params)
+      elsif params[:parameters]
+        parse_url(params)
       else
         parse_url(params)
         params[:fill_in] ||= {}
         params[:params] && params[:params].split('&').each do |param|
-          name,value = param.split('=')
+          name, value = param.split('=')
           params[:fill_in][name] ||= []
           params[:fill_in][name] << value
         end
       end
 
+      parametrization(params) if params.has_key?(:parameters)
       fill_in(params) if params.has_key?(:fill_in)
       raw_body(params) if params.has_key?(:raw_body)
       files(params) if params.has_key?(:files)
@@ -26,27 +29,27 @@ module RubyJmeter
         params[:path] = params[:url] # special case for named expressions
       else
         uri = parse_uri(params[:url])
-        params[:port]     ||= uri.port unless URI.parse(URI::encode(params[:url])).scheme.nil?
+        params[:port] ||= uri.port unless URI.parse(URI::encode(params[:url])).scheme.nil?
         params[:protocol] ||= uri.scheme unless URI.parse(URI::encode(params[:url])).scheme.nil?
-        params[:domain]   ||= uri.host
-        params[:path]     ||= uri.path && URI::decode(uri.path)
-        params[:params]   ||= uri.query && URI::decode(uri.query)
+        params[:domain] ||= uri.host
+        params[:path] ||= uri.path && URI::decode(uri.path)
+        params[:params] ||= uri.query && URI::decode(uri.query)
       end
       params.delete(:url)
     end
 
     def parse_uri(uri)
       URI.parse(URI::encode(uri)).scheme.nil? ?
-        URI.parse(URI::encode("http://#{uri}")) :
-        URI.parse(URI::encode(uri))
+          URI.parse(URI::encode("http://#{uri}")) :
+          URI.parse(URI::encode(uri))
     end
 
     def fill_in(params)
       params[:update_at_xpath] ||= []
       params[:update_at_xpath] = params[:fill_in].
-        each_with_object(params[:update_at_xpath]) do |(name, values), memo|
-           Array(values).each do |value|
-            memo << {
+          each_with_object(params[:update_at_xpath]) do |(name, values), memo|
+        Array(values).each do |value|
+          memo << {
               :xpath => '//collectionProp',
               :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
                 <elementProp name="#{name}" elementType="HTTPArgument">
@@ -56,25 +59,47 @@ module RubyJmeter
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                   <stringProp name="Argument.name">#{name}</stringProp>
                 </elementProp>
-                EOF
-            }
-          end
+              EOF
+          }
         end
+      end
       params.delete(:fill_in)
+    end
+
+    # build params with xml nodes for input params like:
+    # [ { name: '00000', value: 'xxx', always_encode: true },  { name: '11111', value: 'xxx', always_encode: false },  { name: '22222', value: 'yyy' } ]
+    def parametrization(params)
+      params[:update_at_xpath] ||= []
+      params[:update_at_xpath] = params[:parameters].
+          each_with_object(params[:update_at_xpath]) do |value, memo|
+        memo << {
+            :xpath => '//collectionProp',
+            :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
+                <elementProp name="#{value[:name]}" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">#{value[:always_encode] ? 'true' : false}</boolProp>
+                  <stringProp name="Argument.value">#{value[:value]}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">#{value[:name]}</stringProp>
+                </elementProp>
+            EOF
+        }
+      end
+      params.delete(:parameters)
     end
 
     def raw_body(params)
       params[:update_at_xpath] ||= []
       params[:update_at_xpath] << {
-        :xpath => '//HTTPSamplerProxy',
-        :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
+          :xpath => '//HTTPSamplerProxy',
+          :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           EOF
       }
 
       params[:update_at_xpath] << {
-        :xpath => '//collectionProp',
-        :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
+          :xpath => '//collectionProp',
+          :value => Nokogiri::XML(<<-EOF.strip_heredoc).children
           <elementProp name="" elementType="HTTPArgument">
             <boolProp name="HTTPArgument.always_encode">false</boolProp>
             <stringProp name="Argument.value">#{params[:raw_body].encode(:xml => :text)}</stringProp>
@@ -93,9 +118,9 @@ module RubyJmeter
           b.collectionProp(name: "HTTPFileArgs.files") {
             files.each do |f|
               b.elementProp(name: f[:path], elementType: "HTTPFileArg") {
-                b.stringProp f[:path] || '' , name: "File.path"
-                b.stringProp f[:paramname] || '' , name: "File.paramname"
-                b.stringProp f[:mimetype] || '' , name: "File.mimetype"
+                b.stringProp f[:path] || '', name: "File.path"
+                b.stringProp f[:paramname] || '', name: "File.paramname"
+                b.stringProp f[:mimetype] || '', name: "File.mimetype"
               }
             end
           }
@@ -103,36 +128,36 @@ module RubyJmeter
       end
       params[:update_at_xpath] ||= []
       params[:update_at_xpath] << {
-        :xpath => '//HTTPSamplerProxy',
-        :value => x.doc.root
+          :xpath => '//HTTPSamplerProxy',
+          :value => x.doc.root
       }
     end
 
     def parse_test_type(params)
       case pattern_rules_filter(params).keys.first.to_s
-      when 'contains'
-        2
-      when 'not-contains'
-        6
-      when 'matches'
-        1
-      when 'not-matches'
-        5
-      when 'equals'
-        8
-      when 'not-equals'
-        12
-      when 'substring'
-        16
-      when 'not-substring'
-        20
-      else
-        2
+        when 'contains'
+          2
+        when 'not-contains'
+          6
+        when 'matches'
+          1
+        when 'not-matches'
+          5
+        when 'equals'
+          8
+        when 'not-equals'
+          12
+        when 'substring'
+          16
+        when 'not-substring'
+          20
+        else
+          2
       end
     end
 
     def pattern_rules_filter(params)
-      params.select{ |k, v| ['contains', 'matches', 'equals', 'substring', 'not-contains'].include?(k.to_s) }
+      params.select { |k, v| ['contains', 'matches', 'equals', 'substring', 'not-contains'].include?(k.to_s) }
     end
   end
 end

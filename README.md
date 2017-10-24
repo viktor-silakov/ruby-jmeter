@@ -293,6 +293,20 @@ submit name: 'Submit Form', url: 'http://altentee.com/',
 
 This method makes a single request. The fill_in parameter lets you specify key/value pairs for form field parameters. You can also use the built in JMeter `${expression}` language to access run time variables extracted from previous responses.
 
+### POST request with long parameters list
+```ruby
+post(name: 'request name',
+     comments: 'POST https://stress.example.com/signup_users HTTP/1.1',
+     url: '/signup_users',
+     parameters: [
+         { name: 'Name', value: 'Ivan', always_encode: true },
+         { name: 'Title', value: 'xxx'}
+     ],
+     follow_redirects: true,
+     use_keepalive: true)
+```
+             
+
 ### POST JSON
 
 ```ruby

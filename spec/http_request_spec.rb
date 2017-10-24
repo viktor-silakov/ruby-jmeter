@@ -195,6 +195,42 @@ describe 'http_request' do
     end
   end
 
+  describe 'post with long parameters' do
+    let(:doc) do
+      test do
+        threads do
+          post name: 'test post request', url: 'http://example.com', parameters: [
+              { name: 'firstname', value: 'ivan', always_encode: true },
+              { name: 'lastname', value: 'ivanov' }
+          ]
+        end
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search('//HTTPSamplerProxy').first }
+
+    it 'should match on query request name: test post request' do
+      expect(fragment.attributes['testname'].value).to eq 'test post request'
+    end
+
+    it 'should match on query param name: firstname' do
+      expect(fragment.search(".//stringProp[@name='Argument.name']")[0].text).to eq 'firstname'
+    end
+
+    it 'should match on query param value: ivan' do
+      expect(fragment.search(".//stringProp[@name='Argument.value']")[0].text).to eq 'ivan'
+    end
+
+    it 'should match on query param name: lastname' do
+      expect(fragment.search(".//stringProp[@name='Argument.name']")[1].text).to eq 'lastname'
+    end
+
+    it 'should match on query param value: ivanov' do
+      expect(fragment.search(".//stringProp[@name='Argument.value']")[1].text).to eq 'ivanov'
+    end
+
+  end
+
   describe 'submit' do
     let(:doc) do
       test do
@@ -237,8 +273,8 @@ describe 'http_request' do
         threads do
           transaction name: "TC_03", parent: true, include_timers: true do
             submit url: "/", fill_in: { username: 'tim', password: 'password' },
-                   files: [{path: '/tmp/foo', paramname: 'fileup', mimetype: 'text/plain'},
-                           {path: '/tmp/bar', paramname: 'otherfileup'}]
+                   files: [{ path: '/tmp/foo', paramname: 'fileup', mimetype: 'text/plain' },
+                           { path: '/tmp/bar', paramname: 'otherfileup' }]
           end
         end
       end.to_doc
