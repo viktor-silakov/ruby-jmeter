@@ -4,14 +4,14 @@ describe 'regular_expression_extractor' do
   describe 'standard scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'my_variable', match_number: 1, default: '424242'
+        regex pattern: 'pattern', refname: 'my_var', name: 'my_variable', match_number: 1, default: '424242'
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'matches on refname' do
-      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_variable'
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_var'
     end
 
     it 'matches on regex' do
@@ -38,14 +38,14 @@ describe 'regular_expression_extractor' do
   describe 'variable scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'my_variable', variable: 'test_variable'
+        regex pattern: 'pattern', refname: 'my_var', name: 'my_variable', variable: 'test_variable'
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'matches on refname' do
-      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_variable'
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_var'
     end
 
     it 'matches on regex' do
@@ -64,14 +64,14 @@ describe 'regular_expression_extractor' do
   describe '"Main sample only" scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'main_sample_only', scope: 'Main sample only'
+        regex pattern: 'pattern', refname: 'my_sample', name: 'main_sample_only', scope: 'Main sample only'
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'matches on refname' do
-      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'main_sample_only'
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_sample'
     end
 
     it 'matches on regex' do
@@ -90,14 +90,14 @@ describe 'regular_expression_extractor' do
   describe '"Main sample and sub-samples" scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'main_sample_and_sub', scope: 'Main sample and sub-samples'
+        regex pattern: 'pattern', refname: 'my_var', name: 'main_sample_and_sub', scope: 'Main sample and sub-samples'
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'matches on refname' do
-      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'main_sample_and_sub'
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_var'
     end
 
     it 'matches on regex' do
@@ -116,14 +116,14 @@ describe 'regular_expression_extractor' do
   describe '"Sub-samples only" scope' do
     let(:doc) do
       test do
-        regex pattern: 'pattern', name: 'sub_only', scope: 'Sub-samples only'
+        regex pattern: 'pattern', refname: 'my_var', name: 'sub_only', scope: 'Sub-samples only'
       end.to_doc
     end
 
     let(:fragment) { doc.search('//RegexExtractor').first }
 
     it 'matches on refname' do
-      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'sub_only'
+      expect(fragment.search(".//stringProp[@name='RegexExtractor.refname']").text).to eq 'my_var'
     end
 
     it 'matches on regex' do

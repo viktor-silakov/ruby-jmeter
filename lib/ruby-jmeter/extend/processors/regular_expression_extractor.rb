@@ -1,7 +1,7 @@
 module RubyJmeter
   class ExtendedDSL < DSL
     def regular_expression_extractor(params, &block)
-      params[:refname] = params[:name]
+      params[:refname] ||= params[:name]
       params[:regex] = params[:pattern]
       params[:template] = params[:template] || "$1$"
 

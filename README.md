@@ -331,7 +331,7 @@ random_timer 1000, 6000
 You can use the `extract` method to extract values from a server response using a regular expression. This is aliased as the `web_reg_save_param` method. This method is typically used inside a `visit` or `submit` block.
 
 ```ruby
-extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token'
+extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token', refname: 'my_variable'
 
 visit name: 'Google', url: "http://google.com/" do
   extract regex: 'aria-label="(.+?)"', name: 'button_text'
