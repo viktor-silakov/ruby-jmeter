@@ -2,7 +2,7 @@
 
 This is fork for [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project.
 
-The main aim of the project - add frequently used features of JMeter (like entity custom names and comments) that not present in [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project. 
+The main aim of the project - add frequently used features of JMeter (like entity custom names, comments, properly scopes and other) that not present in [Ruby-JMeter](<https://github.com/flood-io/ruby-jmeter>) project. 
 
 Tired of using the JMeter GUI or looking at hairy XML files?
 
@@ -371,7 +371,7 @@ You can use the `assert` method to extract values from a server response using a
 
 ```ruby
 visit "Altentee", "http://altentee.com" do
-  assert contains: "We test, tune and secure your site"
+  assert name: 'assert test name', contains: "We test, tune and secure your site"
 end
 ```
 

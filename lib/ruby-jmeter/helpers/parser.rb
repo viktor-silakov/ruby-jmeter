@@ -109,7 +109,7 @@ module RubyJmeter
     end
 
     def parse_test_type(params)
-      case params.keys.first.to_s
+      case pattern_rules_filter(params).keys.first.to_s
       when 'contains'
         2
       when 'not-contains'
@@ -131,5 +131,8 @@ module RubyJmeter
       end
     end
 
+    def pattern_rules_filter(params)
+      params.select{ |k, v| ['contains', 'matches', 'equals', 'substring', 'not-contains'].include?(k.to_s) }
+    end
   end
 end

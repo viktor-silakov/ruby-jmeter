@@ -2,7 +2,8 @@ module RubyJmeter
   class ExtendedDSL < DSL
     def response_assertion(params, &block)
       params[:test_type] = parse_test_type(params)
-      params['0'] = params.values.first
+      searsh_key =  pattern_rules_filter(params).values.first
+      params['0'] = searsh_key
 
       if params[:json]
         params[:EXPECTED_VALUE] = params[:value]
@@ -20,6 +21,10 @@ module RubyJmeter
               <stringProp name="Scope.variable">#{params[:variable]}</stringProp>
             EOS
           )
+        end
+
+        if searsh_key.nil? || searsh_key.empty?
+          node.doc.xpath("//stringProp[@name='0']").remove
         end
 
         if params[:scope] == 'main'
