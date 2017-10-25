@@ -1,5 +1,6 @@
 module RubyJmeter
   class ExtendedDSL < DSL
+    include RubyJmeter::Parser
     def regular_expression_extractor(params, &block)
       params[:refname] ||= params[:name]
       params[:regex] = params[:pattern]
@@ -21,17 +22,13 @@ module RubyJmeter
         else
           node.doc.xpath("//stringProp[@name='Sample.scope']").remove if !params[:variable]
         end
+
+        if scope_map[params[:scope]] == 'main'
+          node.doc.xpath("//stringProp[@name='Sample.scope']").remove
+        end
       end
 
       attach_node(node, &block)
-    end
-
-    def scope_map
-      {
-          'Main sample and sub-samples' => 'all',
-          'Sub-samples only' => 'children',
-          'JMeter Variable' => 'variable'
-      }
     end
 
     alias regex regular_expression_extractor

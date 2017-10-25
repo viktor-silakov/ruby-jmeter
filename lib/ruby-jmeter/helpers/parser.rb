@@ -159,5 +159,18 @@ module RubyJmeter
     def pattern_rules_filter(params)
       params.select { |k, v| ['contains', 'matches', 'equals', 'substring', 'not-contains'].include?(k.to_s) }
     end
+
+    def scope_map
+      {
+          'Main sample and sub-samples' => 'all',
+          'Sub-samples only' => 'children',
+          'JMeter Variable' => 'variable',
+          'all' => 'all',
+          'children' => 'children',
+          'variable' => 'variable',
+          'main' => 'main',
+          'Main sample only' => 'main'
+      }
+    end
   end
 end

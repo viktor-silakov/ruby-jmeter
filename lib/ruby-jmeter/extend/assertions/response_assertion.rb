@@ -1,6 +1,8 @@
 module RubyJmeter
   class ExtendedDSL < DSL
+    include RubyJmeter::Parser
     def response_assertion(params, &block)
+      params[:scope] = params[:scope] ? scope_map[params[:scope]] : 'all'
       params[:test_type] = parse_test_type(params)
       searsh_key =  pattern_rules_filter(params).values.first
       params['0'] = searsh_key
@@ -27,7 +29,7 @@ module RubyJmeter
           node.doc.xpath("//stringProp[@name='0']").remove
         end
 
-        if params[:scope] == 'main'
+        if scope_map[params[:scope]] == 'main'
           node.doc.xpath("//stringProp[@name='Assertion.scope']").remove
         end
       end

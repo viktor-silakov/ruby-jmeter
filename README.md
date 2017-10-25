@@ -389,6 +389,13 @@ visit "Altentee", "http://altentee.com" do
 end
 ```
 
+JMeter like scope names:
+```ruby
+ response_assertion name: 'test assertion',
+                    substring: 'sample answer',
+                    scope: 'Main sample only'
+
+```
 
 This method takes 3 parameters: the matching rule, the test string, and an optional parameters hash. This is based on the [Response Assertion](http://jmeter.apache.org/usermanual/component_reference.html#Response_Assertion).
 

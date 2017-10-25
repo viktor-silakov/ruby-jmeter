@@ -50,6 +50,52 @@ describe 'response assertion' do
     end
   end
 
+  describe 'custom jmeter like scope' do
+    let(:doc) do
+      test do
+        assert name: 'custom jmeter like scope', 'not-contains' => 'Something in frames', scope: 'Sub-samples only'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search('//ResponseAssertion').first }
+
+    it 'matches on refname' do
+      expect(fragment.search(".//stringProp[@name='0']").text).to eq 'Something in frames'
+    end
+
+    it 'matches on test_type' do
+      expect(fragment.search(".//intProp[@name='Assertion.test_type']").text).to eq '6'
+    end
+
+    it 'matches on scope' do
+      expect(fragment.search(".//stringProp[@name='Assertion.scope']").text).to eq 'children'
+    end
+  end
+
+  # if scope eq - 'Main sample only' then node was removed
+  describe 'custom jmeter like scope - Main sample only' do
+    let(:doc) do
+      test do
+        assert name: 'custom jmeter like scope', 'not-contains' => 'Something in frames', scope: 'Main sample only'
+      end.to_doc
+    end
+
+    let(:fragment) { doc.search('//ResponseAssertion').first }
+
+    it 'matches on refname' do
+      expect(fragment.search(".//stringProp[@name='0']").text).to eq 'Something in frames'
+    end
+
+    it 'matches on test_type' do
+      expect(fragment.search(".//intProp[@name='Assertion.test_type']").text).to eq '6'
+    end
+
+    it 'matches on scope' do
+      expect(fragment.search(".//stringProp[@name='Assertion.scope']").empty?).to eq true
+    end
+  end
+
+
   describe 'variable scope' do
     let(:doc) do
       test do
