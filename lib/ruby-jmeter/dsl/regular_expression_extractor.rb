@@ -14,6 +14,7 @@ module RubyJmeter
       testname = params.kind_of?(Array) ? 'RegularExpressionExtractor' : (params[:name] || 'RegularExpressionExtractor')
       @doc = Nokogiri::XML(<<-EOS.strip_heredoc)
 <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="#{testname}" enabled="true">
+  <stringProp name="TestPlan.comments"/>
   <stringProp name="RegexExtractor.useHeaders">false</stringProp>
   <stringProp name="RegexExtractor.refname"/>
   <stringProp name="RegexExtractor.regex"/>
@@ -21,6 +22,7 @@ module RubyJmeter
   <stringProp name="RegexExtractor.default"/>
   <stringProp name="RegexExtractor.match_number"/>
   <stringProp name="Sample.scope">all</stringProp>
+
   <boolProp name="RegexExtractor.default_empty_value"/>
 </RegexExtractor>)
       EOS
