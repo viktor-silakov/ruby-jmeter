@@ -4,6 +4,8 @@ module RubyJmeter
       node = RubyJmeter::JsonPathPostprocessor.new(params)
       attach_node(node, &block)
     end
+
+    alias json_extractor json_path_postprocessor
   end
 
   class JsonPathPostprocessor
