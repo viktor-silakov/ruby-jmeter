@@ -349,7 +349,7 @@ extract regex: "content='(.+?)' name='csrf-token'", name: 'csrf-token', refname:
 
 visit name: 'Google', url: "http://google.com/" do
   extract regex: 'aria-label="(.+?)"', name: 'button_text'
-  extract xpath: '//button', name: 'button'
+  extract xpath: '//button', name: 'button', scope: 'Main sample only', match_number: 1
 end
 ```
 
